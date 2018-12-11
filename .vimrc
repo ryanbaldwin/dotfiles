@@ -54,6 +54,7 @@ Plug 'https://github.com/ngmy/vim-rubocop'  " Rubocop!
 
 " Rspec
 Plug 'https://github.com/thoughtbot/vim-rspec'
+let g:rspec_command = '!bundle exec rspec --color {spec}'
 map <Leader>c :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
@@ -67,7 +68,8 @@ call plug#end()
 
 syntax on
 set number
-
+set splitbelow
+set splitright
 
 " Syntastic Settings
 let g:syntastic_swift_checkers = ['swiftlint', 'swiftpm']
