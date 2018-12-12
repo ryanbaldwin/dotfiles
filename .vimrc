@@ -45,6 +45,7 @@ Plug 'https://github.com/airblade/vim-gitgutter' " GitGutter
 
 " Ruby stuff
 Plug 'https://github.com/tpope/vim-rails'   " Rails
+Plug 'https://github.com/tpope/vim-rake'    " Rake
 Plug 'https://github.com/vim-ruby/vim-ruby' " Ruby
 Plug 'https://github.com/tpope/vim-bundler' " Bundle
 Plug 'https://github.com/skalnik/vim-vroom' " tests
