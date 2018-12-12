@@ -12,12 +12,6 @@ let mapleader = ","
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-" Fuzzy File Finding For Fun and Functionality
-Plug 'https://github.com/kien/ctrlp.vim'
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
-Plug 'junegunn/vim-easy-align'
-
 " Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 
@@ -26,6 +20,31 @@ Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'ctrlpvim/ctrlp.vim'
+
+" General programming plugins
+Plug 'scrooloose/nerdcommenter'
+let g:NERDSpaceDelims = 1 		" Add spaces after comment delimiters by default
+" let g:NERDCompactSexyComs = 0 		" Use compact syntax for prettified multi-line comments
+let g:NERDDefaultAlign = 'left' 	" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDAltDelims_swift = 1 		" Set a language to use its alternate delimiters by default
+let g:NERDCommentEmptyLines = 0 	" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDTrimTrailingWhitespace = 1 	" Enable trimming of trailing whitespace when uncommenting
+
+Plug 'altercation/vim-colors-solarized'
+Plug 'tpope/vim-surround'
+
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
+Plug 'majutsushi/tagbar'
+nmap <Leader>b :TagbarToggle<CR>
+
+Plug 'junegunn/vim-easy-align'
+
+" Clojure
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
 
 " Using a non-master branch
@@ -35,9 +54,13 @@ Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'fatih/vim-go', { 'tag': '*' }
 
 " Plugin options
-Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
 Plug 'https://github.com/vim-syntastic/syntastic'
-Plug 'https://github.com/keith/swift.vim'
+
+" Go
+Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+
+" Swift
+Plug 'https://github.com/bumaociyuan/vim-swift'
 
 " Git
 Plug 'https://github.com/tpope/vim-fugitive'
@@ -68,7 +91,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 call plug#end()
 
 syntax on
-set number
+set number rnu
 
 " Splits
 set splitbelow
@@ -84,17 +107,3 @@ let g:syntastic_error_symbol = "✗"
 let syntastic_style_error_symbol = "✗"
 let g:syntastic_warning_symbol = "∙∙"
 let syntastic_style_warning_symbol = "∙∙"
-
-" status line colors and stuff
-function! InsertStatuslineColor(mode)
-  if a:mode == 'i'
-    hi StatusLine guibg=Cyan ctermfg=6 guifg=Black ctermbg=0
-  elseif a:mode == 'r'
-    hi StatusLine guibg=Purple ctermfg=5 guifg=Black ctermbg=0
-  else
-    hi StatusLine guibg=DarkRed ctermfg=1 guifg=Black ctermbg=0
-  endif
-endfunction
-
-au InsertEnter * call InsertStatuslineColor(v:insertmode)
-au InsertLeave * hi StatusLine guibg=DarkGrey ctermfg=8 guifg=White ctermbg=15
