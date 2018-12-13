@@ -19,7 +19,11 @@ Plug 'https://github.com/junegunn/vim-github-dashboard.git'
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
 " On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+Plug 'scrooloose/nerdtree'
+let g:NERDTreeNodeDelimiter = "\u00a0"
+map <Leader>t :NERDTreeToggle<CR>
+
 Plug 'ctrlpvim/ctrlp.vim'
 
 " General programming plugins
@@ -41,6 +45,20 @@ let g:airline#extensions#tabline#enabled = 1
 
 Plug 'majutsushi/tagbar'
 nmap <Leader>b :TagbarToggle<CR>
+let g:tagbar_type_swift = {
+  \ 'ctagstype': 'swift',
+  \ 'kinds' : [
+    \ 'n:Enums',
+    \ 't:Typealiases',
+    \ 'p:Protocols',
+    \ 's:Structs',
+    \ 'c:Classes',
+    \ 'f:Functions',
+    \ 'v:Variables',
+    \ 'e:Extensions'
+  \ ],
+  \ 'sort' : 0
+\ }
 
 Plug 'junegunn/vim-easy-align'
 
@@ -90,14 +108,21 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " Initialize plugin system
 call plug#end()
 
+" miscellaneous bootstrap settings
 syntax on
-set number rnu
+set number rnu cursorline
 
 " Splits
 set splitbelow
 set splitright
 nnoremap <C-L> <C-W><C-L>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
 nnoremap <C-H> <C-W><C-H>
+
+" Tabs
+nnoremap <Leader>] :tabn<CR>
+nnoremap <Leader>[ :tabp<CR>
 
 " Syntastic Settings
 let g:syntastic_swift_checkers = ['swiftlint', 'swiftpm']
