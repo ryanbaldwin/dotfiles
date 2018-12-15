@@ -7,6 +7,12 @@ endif
 " Specify a custom <Leader> key
 let mapleader = ","
 
+" shortcut to edit vimrc file
+map <leader>vimrc :tabe ~/.vimrc<cr>
+
+" auto-write and reload vimrc on save/close
+autocmd bufwritepost .vimrc source $MYVIMRC
+
 " Specify a directory for plugins
 " - For Neovim: ~/.local/share/nvim/plugged
 " - Avoid using standard Vim directory names like 'plugin'
@@ -41,7 +47,7 @@ Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 
 Plug 'majutsushi/tagbar'
 nmap <Leader>b :TagbarToggle<CR>
@@ -84,6 +90,9 @@ Plug 'https://github.com/bumaociyuan/vim-swift'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/airblade/vim-gitgutter' " GitGutter
 
+" GraphQL
+Plug 'jparise/vim-graphql'
+
 " Ruby stuff
 Plug 'https://github.com/tpope/vim-rails'   " Rails
 Plug 'https://github.com/tpope/vim-rake'    " Rake
@@ -110,7 +119,7 @@ call plug#end()
 
 " miscellaneous bootstrap settings
 syntax on
-set number rnu cursorline
+set number rnu "cursorline
 
 " Splits
 set splitbelow
@@ -123,6 +132,15 @@ nnoremap <C-H> <C-W><C-H>
 " Tabs
 nnoremap <Leader>] :tabn<CR>
 nnoremap <Leader>[ :tabp<CR>
+
+" Language tab settings
+"set list
+autocmd Filetype python setlocal ts=2 sw=2 expandtab
+autocmd Filetype ruby setlocal ts=2 sw=2 expandtab
+autocmd Filetype swift setlocal ts=2 sw=2 expandtab
+autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype yml setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype graphql setlocal ts=2 sts=2 sw=2 expandtab
 
 " Syntastic Settings
 let g:syntastic_swift_checkers = ['swiftlint', 'swiftpm']
