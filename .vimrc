@@ -179,6 +179,7 @@ autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype yml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype graphql setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype liquid setlocal ts=2 sts=2 sw=2 expandtab
 
 " Syntastic Settings
 let g:syntastic_swift_checkers = ['swiftlint', 'swiftpm']
