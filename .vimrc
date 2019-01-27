@@ -68,20 +68,15 @@ let g:tagbar_type_swift = {
 
 Plug 'junegunn/vim-easy-align'
 
-" Clojure
-Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
 " Using a non-master branch
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 
-" Using a tagged release; wildcard allowed (requires git 1.9.2 or above)
-Plug 'fatih/vim-go', { 'tag': '*' }
-
-" Plugin options
-Plug 'https://github.com/vim-syntastic/syntastic'
-
-" Go
-Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
+" asynchronous linting
+Plug 'w0rp/ale'
+let g:ale_sign_error = '●'
+let g:ale_sign_warning = '.'
+let g:ale_lint_on_enter = 0
+Plug 'skywind3000/asyncrun.vim'
 
 " Swift
 Plug 'https://github.com/bumaociyuan/vim-swift'
@@ -117,7 +112,19 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " RN/JSX bidness
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'epilande/vim-es2015-snippets'
+Plug 'epilande/vim-react-snippets'
+Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'https://github.com/alvan/vim-closetag'
+Plug 'mattn/emmet-vim'
+
+let g:user_emmet_leader_key='<C-t>'
+let g:user_emmet_settings = {
+			\'javascript.jsx': {
+			\'extends': 'jsx',
+			\},
+			\}
 " filenames like *.xml, *.html, *.xhtml, ...
 " These are the file extensions where this plugin is enabled.
 "
@@ -180,12 +187,4 @@ autocmd Filetype yml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype graphql setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype liquid setlocal ts=2 sts=2 sw=2 expandtab
-
-" Syntastic Settings
-let g:syntastic_swift_checkers = ['swiftlint', 'swiftpm']
-
-" Error symbols
-let g:syntastic_error_symbol = "✗"
-let syntastic_style_error_symbol = "✗"
-let g:syntastic_warning_symbol = "∙∙"
-let syntastic_style_warning_symbol = "∙∙"
+autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
