@@ -18,9 +18,6 @@ autocmd bufwritepost .vimrc source $MYVIMRC
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 
-" Any valid git URL is allowed
-Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
 
@@ -118,6 +115,11 @@ Plug 'epilande/vim-react-snippets'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'https://github.com/alvan/vim-closetag'
 Plug 'mattn/emmet-vim'
+Plug 'prettier/vim-prettier'
+let g:prettier#exec_cmd_async =1
+let g:prettier#autoformat = 0
+" enables vimprettier to run in files without requires the @format doc tag.
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
 let g:user_emmet_leader_key='<C-t>'
 let g:user_emmet_settings = {
