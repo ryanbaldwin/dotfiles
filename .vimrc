@@ -1,7 +1,7 @@
 if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " Specify a custom <Leader> key
@@ -9,6 +9,10 @@ let mapleader = ","
 
 " shortcut to edit vimrc file
 map <leader>vimrc :tabe ~/.vimrc<cr>
+
+" shortcut to save
+map <c-s> <esc>:w<cr>
+imap <c-s> <esc>:w<cr>
 
 " auto-write and reload vimrc on save/close
 autocmd bufwritepost .vimrc source $MYVIMRC
@@ -20,6 +24,9 @@ call plug#begin('~/.vim/plugged')
 
 " Multiple Plug commands can be written in a single line using | separators
 Plug 'SirVer/ultisnips' | Plug 'honza/vim-snippets'
+let g:UltiSnipsExpandTrigger="<leader>s"
+let g:UltiSnipsJumpForwardTrigger="<leader>>"
+let g:UltiSnipsJumpBackwardTrigger="<leader><"
 
 " On-demand loading
 "Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
@@ -49,19 +56,20 @@ let g:airline#extensions#tabline#enabled = 0
 Plug 'majutsushi/tagbar'
 nmap <Leader>b :TagbarToggle<CR>
 let g:tagbar_type_swift = {
-  \ 'ctagstype': 'swift',
-  \ 'kinds' : [
-    \ 'n:Enums',
-    \ 't:Typealiases',
-    \ 'p:Protocols',
-    \ 's:Structs',
-    \ 'c:Classes',
-    \ 'f:Functions',
-    \ 'v:Variables',
-    \ 'e:Extensions'
-  \ ],
-  \ 'sort' : 0
-\ }
+			\ 'ctagstype': 'swift',
+			\ 'kinds' : [
+			\ 'n:Enums',
+			\ 't:Typealiases',
+			\ 'p:Protocols',
+			\ 's:Structs',
+			\ 'c:Classes',
+			\ 'f:Functions',
+			\ 'v:Variables',
+			\ 'e:Extensions'
+			\ ],
+			\ 'sort' : 0
+			\ }
+noremap <leader>. :CtrlPTag<cr>
 
 Plug 'junegunn/vim-easy-align'
 
@@ -106,12 +114,30 @@ map <Leader>a :call RunAllSpecs()<CR>
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
-" RN/JSX bidness
+" RN/JSX/TSX bidness
+Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'epilande/vim-es2015-snippets'
-Plug 'epilande/vim-react-snippets'
+let g:javascript_conceal_function             = "ƒ"
+let g:javascript_conceal_null                 = "ø"
+let g:javascript_conceal_this                 = "@"
+let g:javascript_conceal_return               = "⇚"
+let g:javascript_conceal_undefined            = "¿"
+let g:javascript_conceal_NaN                  = "ℕ"
+let g:javascript_conceal_prototype            = "¶"
+let g:javascript_conceal_static               = "•"
+let g:javascript_conceal_super                = "Ω"
+let g:javascript_conceal_arrow_function       = "⇒"
+set conceallevel=1
+map <leader>¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
+" augroup javascript_folding
+"         au!
+"         au FileType javascript setlocal foldmethod=syntax
+" augroup END
+
+" Plug 'epilande/vim-es2015-snippets'
+" Plug 'epilande/vim-react-snippets'
+Plug 'morgsmccauley/vim-react-native-snippets'
 Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'https://github.com/alvan/vim-closetag'
 Plug 'mattn/emmet-vim'
