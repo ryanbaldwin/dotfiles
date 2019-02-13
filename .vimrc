@@ -32,7 +32,7 @@ let g:UltiSnipsJumpBackwardTrigger="<leader><"
 "Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'scrooloose/nerdtree'
 let g:NERDTreeNodeDelimiter = "\u00a0"
-map <Leader>t :NERDTreeToggle<CR>
+map <Leader>f :NERDTreeToggle<CR>
 
 Plug 'ctrlpvim/ctrlp.vim'
 
@@ -55,20 +55,6 @@ let g:airline#extensions#tabline#enabled = 0
 
 Plug 'majutsushi/tagbar'
 nmap <Leader>b :TagbarToggle<CR>
-let g:tagbar_type_swift = {
-			\ 'ctagstype': 'swift',
-			\ 'kinds' : [
-			\ 'n:Enums',
-			\ 't:Typealiases',
-			\ 'p:Protocols',
-			\ 's:Structs',
-			\ 'c:Classes',
-			\ 'f:Functions',
-			\ 'v:Variables',
-			\ 'e:Extensions'
-			\ ],
-			\ 'sort' : 0
-			\ }
 noremap <leader>. :CtrlPTag<cr>
 
 Plug 'junegunn/vim-easy-align'
@@ -94,22 +80,22 @@ Plug 'https://github.com/airblade/vim-gitgutter' " GitGutter
 Plug 'jparise/vim-graphql'
 
 " Ruby stuff
-Plug 'https://github.com/tpope/vim-rails'   " Rails
-Plug 'https://github.com/tpope/vim-rake'    " Rake
-Plug 'https://github.com/vim-ruby/vim-ruby' " Ruby
-Plug 'https://github.com/tpope/vim-bundler' " Bundle
-Plug 'https://github.com/skalnik/vim-vroom' " tests
-Plug 'https://github.com/tpope/vim-endwise' " automagically ends structures
-Plug 'https://github.com/ervandew/supertab' " insert completions
-Plug 'https://github.com/ngmy/vim-rubocop'  " Rubocop!
+" Plug 'https://github.com/tpope/vim-rails'   " Rails
+" Plug 'https://github.com/tpope/vim-rake'    " Rake
+" Plug 'https://github.com/vim-ruby/vim-ruby' " Ruby
+" Plug 'https://github.com/tpope/vim-bundler' " Bundle
+" Plug 'https://github.com/skalnik/vim-vroom' " tests
+" Plug 'https://github.com/tpope/vim-endwise' " automagically ends structures
+" Plug 'https://github.com/ervandew/supertab' " insert completions
+" Plug 'https://github.com/ngmy/vim-rubocop'  " Rubocop!
 
 " Rspec
-Plug 'https://github.com/thoughtbot/vim-rspec'
-let g:rspec_command = '!bundle exec rspec --color {spec}'
-map <Leader>c :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+" Plug 'https://github.com/thoughtbot/vim-rspec'
+" let g:rspec_command = '!bundle exec rspec --color {spec}'
+" map <Leader>c :call RunCurrentSpecFile()<CR>
+" map <Leader>s :call RunNearestSpec()<CR>
+" map <Leader>l :call RunLastSpec()<CR>
+" map <Leader>a :call RunAllSpecs()<CR>
 
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
@@ -117,42 +103,50 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 " RN/JSX/TSX bidness
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
-Plug 'maxmellon/vim-jsx-pretty'
-let g:javascript_conceal_function             = "ƒ"
-let g:javascript_conceal_null                 = "ø"
-let g:javascript_conceal_this                 = "@"
-let g:javascript_conceal_return               = "⇚"
-let g:javascript_conceal_undefined            = "¿"
-let g:javascript_conceal_NaN                  = "ℕ"
-let g:javascript_conceal_prototype            = "¶"
-let g:javascript_conceal_static               = "•"
-let g:javascript_conceal_super                = "Ω"
-let g:javascript_conceal_arrow_function       = "⇒"
-set conceallevel=1
+
+Plug 'janko-m/vim-test'
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>gt :TestVisit<CR>
+
+Plug 'mxw/vim-jsx'
 map <leader>¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
 " augroup javascript_folding
 "         au!
 "         au FileType javascript setlocal foldmethod=syntax
 " augroup END
 
+Plug 'heavenshell/vim-jsdoc'
+let g:jsdoc_enable_es6=1
+nmap <silent> <leader>/ <Plug>(jsdoc)
+
+
 " Plug 'epilande/vim-es2015-snippets'
 " Plug 'epilande/vim-react-snippets'
 Plug 'morgsmccauley/vim-react-native-snippets'
-Plug 'othree/javascript-libraries-syntax.vim'
+" Plug 'othree/javascript-libraries-syntax.vim'
 Plug 'https://github.com/alvan/vim-closetag'
-Plug 'mattn/emmet-vim'
-Plug 'prettier/vim-prettier'
-let g:prettier#exec_cmd_async =1
-let g:prettier#autoformat = 0
-" enables vimprettier to run in files without requires the @format doc tag.
-autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
+Plug 'mattn/emmet-vim'
 let g:user_emmet_leader_key='<C-t>'
 let g:user_emmet_settings = {
-			\'javascript.jsx': {
+			\'javascript': {
 			\'extends': 'jsx',
-			\},
 			\}
+			\}
+
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+let g:prettier#exec_cmd_async =1
+" run before saving
+let g:prettier#autoformat = 0
+autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
+let g:prettier#config#single_quote = 'true'
+let g:prettier#config#jsx_bracket_same_line = 'true'
+let g:prettier#config#trailing_comma = 'all'
+
+
 " filenames like *.xml, *.html, *.xhtml, ...
 " These are the file extensions where this plugin is enabled.
 "
