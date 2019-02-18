@@ -35,6 +35,7 @@ let g:NERDTreeNodeDelimiter = "\u00a0"
 map <Leader>f :NERDTreeToggle<CR>
 
 Plug 'ctrlpvim/ctrlp.vim'
+let g:ctrlp_custom_ignore = 'node_modules\|ios\/build\|ios\/Pods\|DS_Store'
 
 " General programming plugins
 Plug 'scrooloose/nerdcommenter'
@@ -104,19 +105,21 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'leafgarland/typescript-vim'
 Plug 'pangloss/vim-javascript'
 
+" Tests
+Plug 'tpope/vim-dispatch' " asynchronous builds and tests and such
+Plug 'reinh/vim-makegreen'
 Plug 'janko-m/vim-test'
+let test#strategy = 'makegreen'
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>gt :TestVisit<CR>
 
-Plug 'mxw/vim-jsx'
-map <leader>¬ :exec &conceallevel ? "set conceallevel=0" : "set conceallevel=1"<CR>
-" augroup javascript_folding
-"         au!
-"         au FileType javascript setlocal foldmethod=syntax
-" augroup END
+" Plug 'mxw/vim-jsx'
+" let g:jsx_ext_required=0
+Plug 'leafgarland/typescript-vim'
+Plug 'maxmellon/vim-jsx-pretty'
 
 Plug 'heavenshell/vim-jsdoc'
 let g:jsdoc_enable_es6=1
@@ -208,5 +211,7 @@ autocmd Filetype yaml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype yml setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype graphql setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2 expandtab
+autocmd Filetype typescript  setlocal ts=2 sts=2 sw=2 expandtab
 autocmd Filetype liquid setlocal ts=2 sts=2 sw=2 expandtab
 autocmd BufWritePost *.js AsyncRun -post=checktime ./node_modules/.bin/eslint --fix %
+
