@@ -4,6 +4,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+set tags=tags;/
+
 " Specify a custom <Leader> key
 let mapleader = ","
 
@@ -57,6 +59,24 @@ let g:airline#extensions#tabline#enabled = 0
 Plug 'majutsushi/tagbar'
 nmap <Leader>b :TagbarToggle<CR>
 noremap <leader>. :CtrlPTag<cr>
+let g:tagbar_type_typescript = {                                                  
+  \ 'ctagsbin' : 'tstags',                                                        
+  \ 'ctagsargs' : '-f-',                                                           
+  \ 'kinds': [                                                                     
+    \ 'e:enums:0:1',                                                               
+    \ 'f:function:0:1',                                                            
+    \ 't:typealias:0:1',                                                           
+    \ 'M:Module:0:1',                                                              
+    \ 'I:import:0:1',                                                              
+    \ 'i:interface:0:1',                                                           
+    \ 'C:class:0:1',                                                               
+    \ 'm:method:0:1',                                                              
+    \ 'p:property:0:1',                                                            
+    \ 'v:variable:0:1',                                                            
+    \ 'c:const:0:1',                                                              
+  \ ],                                                                            
+  \ 'sort' : 0                                                                    
+  \ }   
 
 Plug 'junegunn/vim-easy-align'
 
@@ -75,62 +95,51 @@ Plug 'https://github.com/bumaociyuan/vim-swift'
 
 " Git
 Plug 'https://github.com/tpope/vim-fugitive'
+hi DiffAdd guifg=NONE ctermfg=NONE guibg=#464632 ctermbg=238 gui=NONE cterm=NONE
+hi DiffChange guifg=NONE ctermfg=NONE guibg=#335261 ctermbg=239 gui=NONE cterm=NONE
+hi DiffDelete guifg=#f43753 ctermfg=203 guibg=#79313c ctermbg=237 gui=NONE cterm=NONE
+hi DiffText guifg=NONE ctermfg=NONE guibg=NONE ctermbg=NONE gui=reverse cterm=reverse
+
 Plug 'https://github.com/airblade/vim-gitgutter' " GitGutter
 
 " GraphQL
 Plug 'jparise/vim-graphql'
 
-" Ruby stuff
-" Plug 'https://github.com/tpope/vim-rails'   " Rails
-" Plug 'https://github.com/tpope/vim-rake'    " Rake
-" Plug 'https://github.com/vim-ruby/vim-ruby' " Ruby
-" Plug 'https://github.com/tpope/vim-bundler' " Bundle
-" Plug 'https://github.com/skalnik/vim-vroom' " tests
-" Plug 'https://github.com/tpope/vim-endwise' " automagically ends structures
-" Plug 'https://github.com/ervandew/supertab' " insert completions
-" Plug 'https://github.com/ngmy/vim-rubocop'  " Rubocop!
-
-" Rspec
-" Plug 'https://github.com/thoughtbot/vim-rspec'
-" let g:rspec_command = '!bundle exec rspec --color {spec}'
-" map <Leader>c :call RunCurrentSpecFile()<CR>
-" map <Leader>s :call RunNearestSpec()<CR>
-" map <Leader>l :call RunLastSpec()<CR>
-" map <Leader>a :call RunAllSpecs()<CR>
-
 " Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " RN/JSX/TSX bidness
-Plug 'leafgarland/typescript-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
 Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+">  Plug 'mxw/vim-jsx'
+">  let g:jsx_ext_required=0
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'Raimondi/delimitMate'
+inoremap {<CR> {<CR>}<C-o>O
+inoremap [<CR> [<CR>]<C-o>O
+Plug 'heavenshell/vim-jsdoc'
+let g:jsdoc_enable_es6=1
+Plug 'morgsmccauley/vim-react-native-snippets'
+Plug 'https://github.com/alvan/vim-closetag'
 
 " Tests
 Plug 'tpope/vim-dispatch' " asynchronous builds and tests and such
-Plug 'reinh/vim-makegreen'
+
 Plug 'janko-m/vim-test'
-let test#strategy = 'makegreen'
+let test#strategy = "dispatch"
 nmap <silent> <leader>tn :TestNearest<CR>
 nmap <silent> <leader>tf :TestFile<CR>
 nmap <silent> <leader>ts :TestSuite<CR>
 nmap <silent> <leader>tl :TestLast<CR>
 nmap <silent> <leader>gt :TestVisit<CR>
+nmap <silent> <leader>ta :Dispatch yarn test<CR>
+nmap <silent> <leader>ta! :Dispatch! yarn test<CR>
 
-" Plug 'mxw/vim-jsx'
-" let g:jsx_ext_required=0
-Plug 'leafgarland/typescript-vim'
-Plug 'maxmellon/vim-jsx-pretty'
-
-Plug 'heavenshell/vim-jsdoc'
-let g:jsdoc_enable_es6=1
 nmap <silent> <leader>/ <Plug>(jsdoc)
-
-
-" Plug 'epilande/vim-es2015-snippets'
-" Plug 'epilande/vim-react-snippets'
-Plug 'morgsmccauley/vim-react-native-snippets'
-" Plug 'othree/javascript-libraries-syntax.vim'
-Plug 'https://github.com/alvan/vim-closetag'
 
 Plug 'mattn/emmet-vim'
 let g:user_emmet_leader_key='<C-t>'
@@ -153,7 +162,7 @@ let g:prettier#config#trailing_comma = 'all'
 " filenames like *.xml, *.html, *.xhtml, ...
 " These are the file extensions where this plugin is enabled.
 "
-let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.js'
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.jsx,*.js,*.tsx'
 
 " filenames like *.xml, *.xhtml, ...
 " This will make the list of non-closing tags self-closing in the specified files.
@@ -163,7 +172,7 @@ let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.jsx'
 " filetypes like xml, html, xhtml, ...
 " These are the file types where this plugin is enabled.
 "
-let g:closetag_filetypes = 'html,xhtml,phtml,jsx,js'
+let g:closetag_filetypes = 'html,xhtml,phtml,jsx,js,tsx,ts'
 
 " filetypes like xml, xhtml, ...
 " This will make the list of non-closing tags self-closing in the specified files.
@@ -182,6 +191,9 @@ let g:closetag_shortcut = '>'
 " Add > at current position without closing the current tag, default is ''
 "
 let g:closetag_close_shortcut = '<leader>>'
+
+" searching
+Plug 'vim-scripts/grep.vim'
 
 " Initialize plugin system
 call plug#end()
